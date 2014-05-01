@@ -1,5 +1,9 @@
 execute pathogen#infect()
 
+set background=dark
+
+colorscheme jellybeans
+
 set tabstop=4
 set softtabstop=4
 set expandtab
