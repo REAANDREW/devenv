@@ -30,6 +30,7 @@ syntax on
 
 filetype plugin indent on
 
+noremap <F7> :Autoformat<CR><CR>
 nmap <silent> <C-D> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 
