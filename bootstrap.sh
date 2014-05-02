@@ -11,7 +11,7 @@ curl -LSso /home/vagrant/.vim/autoload/pathogen.vim \
 
 git clone https://github.com/scrooloose/nerdtree.git /home/vagrant/.vim/bundle/nerdtree
 git clone https://github.com/Chiel92/vim-autoformat.git /home/vagrant/.vim/bundle/vim-autoformat
-git clone https://github.com/nanotech/jellybeans.vim ~/.vim/bundle/jellybeans.vim
+git clone https://github.com/nanotech/jellybeans.vim /home/vagrant/.vim/bundle/jellybeans.vim
 
 cp /vagrant/.vimrc /home/vagrant/.vimrc
 
