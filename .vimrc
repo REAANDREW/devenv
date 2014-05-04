@@ -38,3 +38,9 @@ noremap <F7> :Autoformat<CR><CR>
 nmap <silent> <C-D> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 
+
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+

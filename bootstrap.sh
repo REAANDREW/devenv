@@ -9,9 +9,11 @@ mkdir -p /home/vagrant/.vim/autoload /home/vagrant/.vim/bundle; \
 curl -LSso /home/vagrant/.vim/autoload/pathogen.vim \
     https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
+rm -rf /home/vagrant/.vim/bundle/*
 git clone https://github.com/scrooloose/nerdtree.git /home/vagrant/.vim/bundle/nerdtree
 git clone https://github.com/Chiel92/vim-autoformat.git /home/vagrant/.vim/bundle/vim-autoformat
-git clone https://github.com/nanotech/jellybeans.vim /home/vagrant/.vim/bundle/jellybeans.vim
+git clone https://github.com/nanotech/jellybeans.vim /home/vagrant/.vim/bundle/jellybeans
+git clone https://github.com/geekjuice/vim-spec.git /home/vagrant/.vim/bundle/vim-spec
 
 cp /vagrant/.vimrc /home/vagrant/.vimrc
 
