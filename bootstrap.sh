@@ -4,6 +4,7 @@ apt-get update
 apt-get install -y vim
 apt-get install -y git-core
 apt-get install -y curl
+apt-get install -y tmux
 
 mkdir -p /home/vagrant/.vim/autoload /home/vagrant/.vim/bundle; \
 curl -LSso /home/vagrant/.vim/autoload/pathogen.vim \
