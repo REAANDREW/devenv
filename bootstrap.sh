@@ -6,6 +6,9 @@ apt-get install -y git-core
 apt-get install -y curl
 apt-get install -y tmux
 apt-get install -y git-flow
+apt-get install -y cmake
+apt-get install -y automake
+apt-get install -y exuberant-ctags
 
 mkdir -p /home/vagrant/.vim/autoload /home/vagrant/.vim/bundle; \
 curl -LSso /home/vagrant/.vim/autoload/pathogen.vim \
@@ -16,6 +19,11 @@ git clone https://github.com/scrooloose/nerdtree.git /home/vagrant/.vim/bundle/n
 git clone https://github.com/Chiel92/vim-autoformat.git /home/vagrant/.vim/bundle/vim-autoformat
 git clone https://github.com/nanotech/jellybeans.vim /home/vagrant/.vim/bundle/jellybeans
 git clone https://github.com/geekjuice/vim-spec.git /home/vagrant/.vim/bundle/vim-spec
+git clone https://github.com/majutsushi/tagbar.git /home/vagrant/.vim/bundle/tarbar
+git clone https://github.com/tomtom/tlib_vim.git /home/vagrant/.vim/bundle/tlib_vim
+git clone https://github.com/MarcWeber/vim-addon-mw-utils.git /home/vagrant/.vim/bundle/vim-addon-mw-utils
+git clone https://github.com/garbas/vim-snipmate.git /home/vagrant/.vim/bundle/vim-snipmate
+git clone https://github.com/honza/vim-snippets.git /home/vagrant/.vim/bundle/vim-snippets
 
 cp /vagrant/.vimrc /home/vagrant/.vimrc
 
