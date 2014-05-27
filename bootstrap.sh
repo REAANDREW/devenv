@@ -48,6 +48,8 @@ npm install -g mocha
 npm install -g grunt-cli
 npm install -g js-beautify
 npm install -g grunt-init
+npm install -g uglifyjs
+npm install -g browserify
 
 git clone https://github.com/gruntjs/grunt-init-node.git /home/vagrant/.grunt-init/node
 chown -R vagrant:vagrant /home/vagrant/.grunt-init/
