@@ -1,55 +1,109 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
+declare -A osInfo;
+osInfo[/etc/redhat-release]=yum
+osInfo[/etc/arch-release]=pacman
+osInfo[/etc/gentoo-release]=emerge
+osInfo[/etc/SuSE-release]=zypp
+osInfo[/etc/debian_version]=apt-get
 
-apt-get update
-apt-get install -y vim
-apt-get install -y git-core
-apt-get install -y curl
-apt-get install -y tmux
-apt-get install -y git-flow
-apt-get install -y cmake
-apt-get install -y automake
-apt-get install -y exuberant-ctags
+for f in ${!osInfo[@]}
+do
+    if [[ -f $f ]];then
+        echo Package manager: ${osInfo[$f]}
+        PM=${osInfo[$f]}
+    fi
+done
 
-mkdir -p /home/vagrant/.vim/autoload /home/vagrant/.vim/bundle; \
-curl -LSso /home/vagrant/.vim/autoload/pathogen.vim \
+if [ -d /home/vagrant ]; then
+  echo "Treating current user as vagrant"
+  USER=vagrant
+else
+  echo "You are running this script as root on a non-vagrant box (you shouldn't)."
+  echo "Please try again as the user you wish to install as."
+  exit 2
+fi
+
+echo "Installing required packages"
+sudo $PM update
+sudo $PM install -y vim
+sudo $PM install -y git-core
+sudo $PM install -y curl
+sudo $PM install -y tmux
+sudo $PM install -y cmake
+sudo $PM install -y automake
+sudo $PM install -y exuberant-ctags
+sudo $PM install -y tmux
+sudo $PM install -y cmake
+sudo $PM install -y make
+
+echo "Creating VIM mods"
+mkdir -p /home/$USER/.vim/autoload /home/$USER/.vim/bundle; \
+curl -LSso /home/$USER/.vim/autoload/pathogen.vim \
     https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
-rm -rf /home/vagrant/.vim/bundle/*
-git clone https://github.com/scrooloose/nerdtree.git /home/vagrant/.vim/bundle/nerdtree
-git clone https://github.com/Chiel92/vim-autoformat.git /home/vagrant/.vim/bundle/vim-autoformat
-git clone https://github.com/nanotech/jellybeans.vim /home/vagrant/.vim/bundle/jellybeans
-git clone https://github.com/geekjuice/vim-spec.git /home/vagrant/.vim/bundle/vim-spec
-git clone https://github.com/majutsushi/tagbar.git /home/vagrant/.vim/bundle/tarbar
-git clone https://github.com/tomtom/tlib_vim.git /home/vagrant/.vim/bundle/tlib_vim
-git clone https://github.com/MarcWeber/vim-addon-mw-utils.git /home/vagrant/.vim/bundle/vim-addon-mw-utils
-git clone https://github.com/garbas/vim-snipmate.git /home/vagrant/.vim/bundle/vim-snipmate
-git clone https://github.com/honza/vim-snippets.git /home/vagrant/.vim/bundle/vim-snippets
+echo "Creating VIM bundles"
+rm -rf /home/$USER/.vim/bundle/*
+git clone https://github.com/scrooloose/nerdtree.git /home/$USER/.vim/bundle/nerdtree
+git clone https://github.com/Chiel92/vim-autoformat.git /home/$USER/.vim/bundle/vim-autoformat
+git clone https://github.com/nanotech/jellybeans.vim /home/$USER/.vim/bundle/jellybeans
+git clone https://github.com/geekjuice/vim-spec.git /home/$USER/.vim/bundle/vim-spec
+git clone https://github.com/majutsushi/tagbar.git /home/$USER/.vim/bundle/tarbar
+git clone https://github.com/tomtom/tlib_vim.git /home/$USER/.vim/bundle/tlib_vim
+git clone https://github.com/MarcWeber/vim-addon-mw-utils.git /home/$USER/.vim/bundle/vim-addon-mw-utils
+git clone https://github.com/garbas/vim-snipmate.git /home/$USER/.vim/bundle/vim-snipmate
+git clone https://github.com/honza/vim-snippets.git /home/$USER/.vim/bundle/vim-snippets
 
-cp /vagrant/.vimrc /home/vagrant/.vimrc
+echo "Creating Symlinks"
+if [ $USER == 'vagrant' ]; then
+  PATHING="/vagrant/home/"
+else
+  PATHING="$PWD/home/"
+fi
+ln -s $PATHING/.vimrc /home/$USER/.vimrc
+ln -s $PATHING/.gemrc /home/$USER/.gemrc
+ln -s $PATHING/.tmux.conf /home/$USER/.tmux.conf
 
-git clone https://github.com/creationix/nvm.git /home/vagrant/.nvm/
+echo "Installing NVM"
+git clone https://github.com/creationix/nvm.git /home/$USER/.nvm/
+echo "source /home/$USER/.nvm/nvm.sh" >> /home/$USER/.bashrc
+source /home/$USER/.nvm/nvm.sh 
 
-echo "source /home/vagrant/.nvm/nvm.sh" >> /home/vagrant/.bashrc
-echo $USER
-
-source /home/vagrant/.nvm/nvm.sh 
-echo $nvmc >> /home/vagrant/.bashrc
-$nvmc
-
+echo "Installing node.js v0.10"
 nvm install 0.10
-echo "nvm use 0.10" >> /home/vagrant/.bashrc
+echo "nvm use 0.10" >> /home/$USER/.bashrc
 
-chown -R vagrant:vagrant /home/vagrant/.nvm/
-chown -R vagrant:vagrant /home/vagrant/.vim/
-chown vagrant:vagrant /home/vagrant/.vimrc
+# Ruby not playing ball at the moment
+# echo "Installing RVM and Ruby"
+# \curl -sSL https://get.rvm.io | bash -s stable --ruby
 
-npm install -g nodemon
-npm install -g mocha
-npm install -g grunt-cli
-npm install -g js-beautify
-npm install -g grunt-init
-npm install -g uglifyjs
-npm install -g browserify
+echo "Creating Symlinks"
+chown -R $USER:$USER /home/$USER/.nvm/
+chown -R $USER:$USER /home/$USER/.vim/
+chown $USER:$USER /home/$USER/.vimrc
 
-git clone https://github.com/gruntjs/grunt-init-node.git /home/vagrant/.grunt-init/node
-chown -R vagrant:vagrant /home/vagrant/.grunt-init/
+echo "Installing node modules"
+npm install --loglevel error -g nodemon
+npm install --loglevel error -g mocha
+npm install --loglevel error -g grunt-cli
+npm install --loglevel error -g js-beautify
+npm install --loglevel error -g grunt-init
+
+echo "Installing grunt-init-node"
+git clone https://github.com/gruntjs/grunt-init-node.git /home/$USER/.grunt-init/node
+chown -R $UUSER:$USER /home/$USER/.grunt-init/
+
+echo "Installing tmux cpu-mem"
+git clone https://github.com/thewtex/tmux-mem-cpu-load.git /tmp/tmux
+cd /tmp/tmux
+cmake .
+make
+sudo make install
+
+echo "Installing git-flow"
+cd /tmp
+sudo curl -O https://raw.githubusercontent.com/nvie/gitflow/develop/contrib/gitflow-installer.sh
+sudo chmod +x /tmp/gitflow-installer.sh
+sudo /tmp/gitflow-installer.sh
+
+echo "Done!"
+echo "Your vagrant development environment is ready to use"
