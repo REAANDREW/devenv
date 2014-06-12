@@ -37,6 +37,7 @@ filetype plugin indent on
 noremap <F7> :Autoformat<CR><CR>
 nmap <silent> <C-D> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
+nmap <silent> <C-E> :TagbarToggle<CR>
 
 
 map <Leader>t :call RunCurrentSpecFile()<CR>

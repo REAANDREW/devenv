@@ -36,6 +36,7 @@ sudo $PM install -y tmux
 sudo $PM install -y cmake
 sudo $PM install -y make
 sudo $PM install -y build-essential
+sudo $PM install -y gdb
 
 echo "Creating VIM mods"
 mkdir -p /home/$USER/.vim/autoload /home/$USER/.vim/bundle; \
@@ -53,6 +54,7 @@ git clone https://github.com/tomtom/tlib_vim.git /home/$USER/.vim/bundle/tlib_vi
 git clone https://github.com/MarcWeber/vim-addon-mw-utils.git /home/$USER/.vim/bundle/vim-addon-mw-utils
 git clone https://github.com/garbas/vim-snipmate.git /home/$USER/.vim/bundle/vim-snipmate
 git clone https://github.com/honza/vim-snippets.git /home/$USER/.vim/bundle/vim-snippets
+git clone https://github.com/majutsushi/tagbar /home/vagrant/.vim/bundle/tagbar
 
 ln -s $PWD/.vimrc /home/$USER/.vimrc
 ln -s $PWD/.gemrc /home/$USER/.gemrc
