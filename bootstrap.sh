@@ -35,6 +35,7 @@ sudo $PM install -y exuberant-ctags
 sudo $PM install -y tmux
 sudo $PM install -y cmake
 sudo $PM install -y make
+sudo $PM install -y build-essential
 
 echo "Creating VIM mods"
 mkdir -p /home/$USER/.vim/autoload /home/$USER/.vim/bundle; \
