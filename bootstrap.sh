@@ -58,6 +58,10 @@ ln -s $PWD/home/.vimrc /home/$USER/.vimrc
 ln -s $PWD/home/.gemrc /home/$USER/.gemrc
 ln -s $PWD/home/.tmux.conf /home/$USER/.tmux.conf
 
+chown $USER:$USER /home/$USER/.vimrc
+chown $USER:$USER /home/$USER/.gemrc
+chown $USER:$USER /home/$USER/.tmux.conf
+
 echo "Installing NVM"
 git clone https://github.com/creationix/nvm.git /home/$USER/.nvm/
 echo "source /home/$USER/.nvm/nvm.sh" >> /home/$USER/.bashrc
