@@ -53,15 +53,9 @@ git clone https://github.com/MarcWeber/vim-addon-mw-utils.git /home/$USER/.vim/b
 git clone https://github.com/garbas/vim-snipmate.git /home/$USER/.vim/bundle/vim-snipmate
 git clone https://github.com/honza/vim-snippets.git /home/$USER/.vim/bundle/vim-snippets
 
-echo "Creating Symlinks"
-if [ $USER == 'vagrant' ]; then
-  PATHING="/vagrant/home/"
-else
-  PATHING="$PWD/home/"
-fi
-ln -s $PATHING/.vimrc /home/$USER/.vimrc
-ln -s $PATHING/.gemrc /home/$USER/.gemrc
-ln -s $PATHING/.tmux.conf /home/$USER/.tmux.conf
+ln -s $PWD/.vimrc /home/$USER/.vimrc
+ln -s $PWD/.gemrc /home/$USER/.gemrc
+ln -s $PWD/.tmux.conf /home/$USER/.tmux.conf
 
 echo "Installing NVM"
 git clone https://github.com/creationix/nvm.git /home/$USER/.nvm/
