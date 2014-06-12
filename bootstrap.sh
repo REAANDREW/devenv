@@ -54,9 +54,9 @@ git clone https://github.com/MarcWeber/vim-addon-mw-utils.git /home/$USER/.vim/b
 git clone https://github.com/garbas/vim-snipmate.git /home/$USER/.vim/bundle/vim-snipmate
 git clone https://github.com/honza/vim-snippets.git /home/$USER/.vim/bundle/vim-snippets
 
-ln -s $PWD/.vimrc /home/$USER/.vimrc
-ln -s $PWD/.gemrc /home/$USER/.gemrc
-ln -s $PWD/.tmux.conf /home/$USER/.tmux.conf
+ln -s $PWD/home/.vimrc /home/$USER/.vimrc
+ln -s $PWD/home/.gemrc /home/$USER/.gemrc
+ln -s $PWD/home/.tmux.conf /home/$USER/.tmux.conf
 
 echo "Installing NVM"
 git clone https://github.com/creationix/nvm.git /home/$USER/.nvm/
