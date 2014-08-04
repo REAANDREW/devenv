@@ -8,10 +8,10 @@ osInfo[/etc/debian_version]=apt-get
 
 for f in ${!osInfo[@]}
 do
-    if [[ -f $f ]];then
-        echo Package manager: ${osInfo[$f]}
-        PM=${osInfo[$f]}
-    fi
+  if [[ -f $f ]];then
+    echo Package manager: ${osInfo[$f]}
+    PM=${osInfo[$f]}
+  fi
 done
 
 if [ -d /home/vagrant ]; then
@@ -25,8 +25,30 @@ fi
 
 echo "Installing required packages"
 sudo $PM update
-sudo $PM install -y vim
 sudo $PM install -y git-core
+sudo $PM install -y mercurial
+sudo $PM install -y checkinstall
+sudo $PM install -y libncurses5-dev
+sudo $PM install -y python-dev
+sudo $PM install -y unzip
+
+#Install vim with python support
+cd ~
+hg clone https://vim.googlecode.com/hg/ vim
+pushd vim
+./configure --with-features=huge \
+  --enable-multibyte \
+  --enable-pythoninterp \
+  --with-python-config-dir=/usr/lib/python2.7/config \
+  --enable-cscope --prefix=/usr
+
+make VIMRUNTIMEDIR=/usr/share/vim/vim74
+sudo checkinstall -y
+popd
+
+#Remove the source files
+rm -r vim/
+
 sudo $PM install -y curl
 sudo $PM install -y tmux
 sudo $PM install -y cmake
@@ -37,24 +59,7 @@ sudo $PM install -y cmake
 sudo $PM install -y make
 sudo $PM install -y build-essential
 sudo $PM install -y gdb
-
-echo "Creating VIM mods"
-mkdir -p /home/$USER/.vim/autoload /home/$USER/.vim/bundle; \
-curl -LSso /home/$USER/.vim/autoload/pathogen.vim \
-    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-
-echo "Creating VIM bundles"
-rm -rf /home/$USER/.vim/bundle/*
-git clone https://github.com/scrooloose/nerdtree.git /home/$USER/.vim/bundle/nerdtree
-git clone https://github.com/Chiel92/vim-autoformat.git /home/$USER/.vim/bundle/vim-autoformat
-git clone https://github.com/nanotech/jellybeans.vim /home/$USER/.vim/bundle/jellybeans
-git clone https://github.com/geekjuice/vim-spec.git /home/$USER/.vim/bundle/vim-spec
-git clone https://github.com/majutsushi/tagbar.git /home/$USER/.vim/bundle/tarbar
-git clone https://github.com/tomtom/tlib_vim.git /home/$USER/.vim/bundle/tlib_vim
-git clone https://github.com/MarcWeber/vim-addon-mw-utils.git /home/$USER/.vim/bundle/vim-addon-mw-utils
-git clone https://github.com/garbas/vim-snipmate.git /home/$USER/.vim/bundle/vim-snipmate
-git clone https://github.com/honza/vim-snippets.git /home/$USER/.vim/bundle/vim-snippets
-git clone https://github.com/majutsushi/tagbar /home/vagrant/.vim/bundle/tagbar
+sudo $PM install -y python-pip
 
 ln -s $PWD/.vimrc /home/$USER/.vimrc
 ln -s $PWD/.gemrc /home/$USER/.gemrc
