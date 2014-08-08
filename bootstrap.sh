@@ -27,6 +27,7 @@ echo "Installing required packages"
 sudo $PM update
 sudo $PM install -y git-core
 sudo $PM install -y mercurial
+sudo $PM install -y libssl-dev
 sudo $PM install -y checkinstall
 sudo $PM install -y libncurses5-dev
 sudo $PM install -y python-dev
